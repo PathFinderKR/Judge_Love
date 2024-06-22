@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <style>
+        .chat-box {
+            width: 80%;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .user {
+            text-align: right;
+            color: blue;
+        }
+        .response {
+            text-align: left;
+            color: green;
+        }
+        .appeal-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .graph {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .appeal-message {
+            text-align: right;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-box">
+        <div class="message user">
+            <strong>Your Story:</strong> {{ user_story.text|linebreaks }}
+        </div>
+        <div class="message summary">
+            <strong>Summary:</strong> {{ summary|linebreaks }}
+        </div>
+        <div class="message response">
+            <strong>Judgement:</strong> {{ judgement_result|linebreaks }}
+        </div>
+        <div class="graph">
+            <img src="data:image/png;base64,{{ graph }}" alt="Graph">
+        </div>
+        {% for appeal_message, appeal_result, appeal_graph in appeals %}
+        <div class="message appeal-message">
+            <strong>Appeal Message:</strong> {{ appeal_message|linebreaks }}
+        </div>
+        <div class="message response">
+            <strong>Appeal Result:</strong> {{ appeal_result|linebreaks }}
+        </div>
+        <div class="graph">
+            <img src="data:image/png;base64,{{ appeal_graph }}" alt="Appeal Graph">
+        </div>
+        {% endfor %}
+    </div>
+    <div class="appeal-form">
+        <p>Remaining Appeals: {{ remaining_appeals }}</p>
+        {% if remaining_appeals > 0 %}
+        <form method="post" action="{% url 'appeal' %}">
+            {% csrf_token %}
+            <p>
+                <label for="id_text">Appeal Message:</label>
+                <textarea name="text" cols="40" rows="3" required></textarea>
+            </p>
+            <button type="submit">항소하시겠습니까?</button>
+        </form>
+        {% else %}
+        <p>No remaining appeals.</p>
+        <form method="post" action="{% url 'supreme_appeal' %}">
+            {% csrf_token %}
+            <button type="submit">최종 항소</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>

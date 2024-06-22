@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Write a Story</title>
+</head>
+<body>
+    <h2>Write your Story</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label for="id_text">Message:</label>
+            <textarea name="text" cols="40" rows="10" required id="id_text">{{ form.text.value }}</textarea>
+        </p>
+        <button type="submit">Send Message</button>
+    </form>
+    {% if user_story %}
+        <h3>Your Story</h3>
+        <p>{{ user_story.text }}</p>
+    {% endif %}
+    {% if waiting_for_partner %}
+        <p>Waiting for your partner's story...</p>
+    {% endif %}
+</body>
+</html>

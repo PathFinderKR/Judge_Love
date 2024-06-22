@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supreme Result</title>
+    <style>
+        .chat-box {
+            width: 80%;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .user {
+            text-align: right;
+            color: blue;
+        }
+        .response {
+            text-align: left;
+            color: green;
+        }
+        .graph {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-box">
+        <div class="message user">
+            <strong>Your Story:</strong> {{ user_story.text|linebreaks }}
+        </div>
+        <div class="message response">
+            <strong>Supreme Judgement:</strong> {{ supreme_result|linebreaks }}
+        </div>
+        <div class="graph">
+            <img src="data:image/png;base64,{{ supreme_graph }}" alt="Supreme Graph">
+        </div>
+    </div>
+</body>
+</html>
